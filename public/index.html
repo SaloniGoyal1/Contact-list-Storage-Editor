@@ -44,9 +44,9 @@
 	}
 	function returnTextBoxNumber(data){
 			var phone=data.number.split(':');
-			var pstr="<span style=' margin-left:20px;display:inline;text-align:left;width:175px;overflow:auto;float:left; '>";
+			var pstr="<span style=' margin-left:20px;display:inline;text-align:left;width:175px;overflow:auto;float:left;'>";
 			for(var i=0;i<phone.length;i++)
-			pstr+="<i class='fas fa-phone ' style='font-size: 18px;'></i> "+ phone[i]+"<br> ";
+			pstr+="<i class='fas fa-phone' style='font-size: 18px;'></i> "+ phone[i]+"  <br> ";
 			pstr+='</span>';
 		return pstr;
 	}
@@ -54,7 +54,7 @@
 			var phone=data.email.split(':');
 			var pstr="<span style='padding-top:0px;display:inline;text-align:left;width:175px;overflow:none;float:right;margin-right:20px;'>";
 			for(var i=0;i<phone.length;i++)
-			pstr+="<i class='fas fa-envelope-open-text' style='font-size: 15px;'></i>"+phone[i]+"<br>"
+			pstr+="<i class='fas fa-envelope-open-text' style='font-size: 15px;'></i>"+phone[i]+"  <br>"
 			pstr+='</span>';
 		return pstr;
 	}
@@ -86,7 +86,7 @@
 			$('.contact').animate({height: '50px'}, { duration: 200, queue: false });
 			$('.contact').css({background: 'white'});
 		$(x).animate({height: '150px'}, { duration: 200, queue: false });
-		$(x).css({background: ' rgb(18, 189, 175)'});
+		$(x).css({background: ' rgb(204, 102, 204)'});
 		$('.thisone').css({background: ' rgba(0, 0, 0,0)'});
 		}
 		else
