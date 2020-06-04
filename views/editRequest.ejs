@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Add Contact</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="addContact.js"></script>
+<style>
+button {
+  background-color: #4CAF50;
+  border: 2px solid green;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 30%;
+}
+</style>
+</head>
+<body>
+    <center><div style="width: 500px; height: 500px; border: 1px solid black; margin: 50px;" class="div1">
+        <p style="margin: 0px; padding: 0px; font-size: 20px; font-weight: bold;"><a href="index.html" style="text-decoration: none; text-align: left;">&#8592;</a> Add a New Contact</p><br>
+        
+            <h4 style="margin-bottom: 0px;">Name: </h4>
+            <input type="text" placeholder="Name" style="width: 400px; height: 30px; font-size: 20px; margin: 5px;" id="name" required>
+           
+            <h4 style="margin-bottom: 0px;">DOB: </h4>
+            <input type="date" style="width: 400px; height: 30px; font-size: 20px; margin: 5px;" id="date" value='<%date%>'>
+          <%numbers%>
+            <div class="fas fa-plus-circle" onclick="addNumberField()"></div>
+			
+			 <div id="emailDiv">
+            <h4 style="margin-bottom: 0px;">Email: </h4>
+           <%emails%>
+			</div>
+            <div class="fas fa-plus-circle" onclick="addEmailField()"></div>
+            
+            <button id="addContact" value="Save">submit</button>
+    </div></center>
+</body>
+</html>

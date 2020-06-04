@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Phone Book</title>
+<style>
+.contact{
+    height: 50px; 
+    width: 400px; 
+    border: 1px solid black;
+	overflow-y:hidden;
+	overflow-x:hidden;
+}
+</style>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	var allContacts =[];
+	var allTimeBackup=[];
+	$(document).ready(function(){
+		$.get("http://localhost/getAllContacts",
+			function(data, status){
+				console.log("Data: " + data + "\nStatus: " + status);
+				allTimeBackup=data;
+				copyArray();
+				$('.contact').remove();
+				for(var i=0;i<allContacts.length;i++)
+					$('#mainBox').append(createNode(allContacts[i]));  
+		});
+	});
+	function refreshList(){
+		$('.contact').remove();
+		for(var i=0;i<allContacts.length;i++)
+			$('#mainBox').append(createNode(allContacts[i])); 
+	}
+	
+	function createNode(contact){
+		var x= `<div class="contact" onclick='expand(this)' style="position:relative;">
+			<p style="text-align:left; margin-left:10px" > `+ contact.name+` </p>`
+			+returnTextBoxNumber(contact)+returnTextBoxEmail(contact)+`
+			<a href="http://localhost/editRequest/`+contact.number+`" style="position:absolute; z-index:10; bottom:14px;right:40px; " >Edit</a>
+			<a href="http://localhost/delete/`+contact.number+`" style="position:absolute; z-index:10; bottom:14px;right:100px; " >delete</a>
+			<a onclick="expand(this)" class='thisone' style="position:absolute; z-index:10; top:5px;right:18px; " ><i class="fas fa-sort-down" style="font-size: 30px; "></i></a>
+			</div>`;
+		return x;
+	}
+	function returnTextBoxNumber(data){
+			var phone=data.number.split(':');
+			var pstr="<span style=' margin-left:20px;display:inline;text-align:left;width:175px;overflow:auto;float:left; '>";
+			for(var i=0;i<phone.length;i++)
+			pstr+="<i class='fas fa-phone ' style='font-size: 18px;'></i> "+ phone[i]+"<br> ";
+			pstr+='</span>';
+		return pstr;
+	}
+	function returnTextBoxEmail(data){
+			var phone=data.email.split(':');
+			var pstr="<span style='padding-top:0px;display:inline;text-align:left;width:175px;overflow:none;float:right;margin-right:20px;'>";
+			for(var i=0;i<phone.length;i++)
+			pstr+="<i class='fas fa-envelope-open-text' style='font-size: 15px;'></i>"+phone[i]+"<br>"
+			pstr+='</span>';
+		return pstr;
+	}
+	
+	function searchBoxChange(obj){
+		console.log('called');
+		var str=obj.value.toLowerCase();
+		copyArray();
+		for(var i=0;i<allContacts.length;i++){
+				if(allContacts[i].name.toLowerCase().includes(str) || allContacts[i].number.toLowerCase().includes(str) || allContacts[i].email.toLowerCase().includes(str)){}
+				else{
+					console.log(i);
+					if (i > -1) {
+					allContacts.splice(i, 1);
+					i--;
+					}
+				}
+		}
+		refreshList();
+	};
+	function copyArray(){
+		allContacts=[];
+		for(var i=0;i<allTimeBackup.length;i++){
+			allContacts.push(allTimeBackup[i]);
+		}
+	}
+	function expand(x){
+		if($(x).css('height')=='50px'){
+			$('.contact').animate({height: '50px'}, { duration: 200, queue: false });
+			$('.contact').css({background: 'white'});
+		$(x).animate({height: '150px'}, { duration: 200, queue: false });
+		$(x).css({background: ' rgb(18, 189, 175)'});
+		$('.thisone').css({background: ' rgba(0, 0, 0,0)'});
+		}
+		else
+		{
+		$(x).animate({height: '50px'}, { duration: 200, queue: false });
+		$('.thisone').css({background: ' rgba(0, 0, 0,0)'});
+		$('.contact').css({background: 'white'});
+	}	
+}
+</script>
+</head>
+<body>
+    <center><div style="width: 500px; height: auto; border: 1px solid black; margin: 50px;" class="div1">
+        <h1 style="margin: 0px; padding: 0px; background-color: aqua;">Phone Book</h1>
+        <form>
+            <input type="search" placeholder="Search" style="width: 400px; height: 40px; font-size: 20px; margin: 40px;" class="search" onKeyUp="searchBoxChange(this)">
+            <div style="height: 300px; width: 420px; border: 1px solid black; overflow-y: scroll; overflow-x:auto;" class="contacts" id='mainBox'></div>
+            <a href="addcontact.html"><i class="fas fa-plus-circle" style="margin-top: 20px; font-size: 50px; color: blue;"></i></a>
+        </form>
+    </div></center>
+</body>
+</html>
